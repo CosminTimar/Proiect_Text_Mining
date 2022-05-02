@@ -12,6 +12,10 @@ public class DictionaryAttribute {
         this.count = count;
     }
 
+    public int getCount() {
+        return count;
+    }
+
     public TreeMap<String, Integer> getDocWhereAppearance() {
         return docWhereAppearance;
     }

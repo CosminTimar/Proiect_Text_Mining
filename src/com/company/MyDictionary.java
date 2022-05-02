@@ -19,6 +19,8 @@ public class MyDictionary {
     private final DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
     private final TreeMap<String, DictionaryAttribute> dictionary = new TreeMap<>(String.CASE_INSENSITIVE_ORDER);
     private final ArrayList<String> stopWords = new ArrayList<>();
+
+    private final ArrayList<String> fileName = new ArrayList<>();
     private final PorterStemmer porterStemmer = new PorterStemmer();
 
     public MyDictionary(String path) {
@@ -28,6 +30,10 @@ public class MyDictionary {
             e.printStackTrace();
         }
         constructDictionary(path);
+    }
+
+    public TreeMap<String, DictionaryAttribute> getDictionary() {
+        return dictionary;
     }
 
     public void constructDictionary(String path) {
@@ -53,6 +59,10 @@ public class MyDictionary {
         }
     }
 
+    public ArrayList<String> getFineName() {
+        return fileName;
+    }
+
     private void extractAndNormalizeXml(File file) throws ParserConfigurationException, SAXException, IOException {
         DocumentBuilder builder = factory.newDocumentBuilder();
         Document doc = builder.parse(file);
@@ -67,9 +77,9 @@ public class MyDictionary {
 
             if (node.getNodeType() == Node.ELEMENT_NODE) {
                 extractNoNeedCharacters((Element) node, file.getName());
-
             }
         }
+        fileName.add(file.getName());
     }
 
     public void loadStopWords(String path) throws ParserConfigurationException, IOException, SAXException {
@@ -87,7 +97,6 @@ public class MyDictionary {
 
             if (node.getNodeType() == Node.ELEMENT_NODE) {
                 extractStopWords((Element) node);
-
             }
         }
 
